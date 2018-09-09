@@ -3,22 +3,27 @@
 require('Banana.php');
 require('Tomato.php');
 require('Melon.php');
+require('../Traits/Location.php')
 
-class Soldier //ne extenda Army
+class Soldier
 {
-
+	use Location;
 
 	protected $name;
   protected $type;
 	protected $baseAttack;
 	protected $currentAttack;
 	protected $freezeThresh;
-	protected $frozen;
 	protected $dead;
 
 
 
 	//public static function make(
+
+	public function getName()
+  {
+    return $this->name;
+  }
 
   public function getType()
   {
@@ -30,21 +35,20 @@ class Soldier //ne extenda Army
 		$this->dead = 1;
 	}
 
-	public function rollFreeze(int $temp)
+	protected function rollFreeze()
 	{
-		if($this->freezeThresh > $temp)
+		if($this->freezeThresh > $this->$temp)
 		{
 			if(random_int(1,3) == 1)
 			{
-				$this->frozen = 1;
+				$this->currentAttack = 0;
+				echo $this->type." ".$this->name." froze and is unable to fight!".PHP_EOL;
 			}
 		}
-
 	}
 
 	public function reset()
 	{
-		$this->frozen = 0;
 		$this->currentAttack = $this->baseAttack;
 	}
 

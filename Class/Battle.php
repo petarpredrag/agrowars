@@ -2,18 +2,17 @@
 
 class Battle
 {
-	protected $turnCounter;
+	protected $turnCounter = 0;
 	protected $troopSize;
-	protected $turnTroops = []; // ( 0 => $army1[ 0 => $this->army1->soldiers[$id], ...], 1=> $army2[...])
+	protected $turnTroops = [];
 	protected $attacker;
   protected $army = [];
-	protected $location;
 
-	public function __construct(Army $army1, Army $army2, Location $location, int $troopSize = 0)
+
+	public function __construct(Army $army1, Army $army2, int $troopSize = 0)
 	{
 		$this->army[0] = $army1;
 		$this->army[1] = $army2;
-		$this->location = $location;
     if(!$this->troopSize = $troopSize)
     {
       $this->troopSize = min($this->army[0]->number, $this->army[1]->number) / 10;
@@ -21,30 +20,72 @@ class Battle
 	}
 
 
-
   public function fight()
   {
-    $this->newTurn();
+    for($i = $this->army[0]->number + $this->army[1]->number; (!$this->army[0]->number) OR (!$this->army[0]->number); )$this->newTurn();
   }
 
   protected function newTurn()
   {
-    if(($last = min($this->army[0]->number, $this->army[1]->number)) < $this->troopSize)
-    {
-      $this->troopSize = $last;
-    }
-    foreach($this->army as $key => $army)
-    {
-      $this->$turnTroops[$key] = $army->draftTroops($this->troopSize);
-    }
+		$this->turnCounter += 1;
+		$this->setAttacker();
+		$this->draftTroops();
+		$this->combat();
+		$this->cleanUp()
   }
 
-
-
-	protected function freezeCheck()
+	protected function setAttacker()
 	{
-		foreach($this->turnTroops as $key => $troop)
+		if($this->turnCounter & 1)
 		{
-			foreach($troop as $id)
+			$this->attacker = 0;
+			echo "Army 1 attacks first this turn!";
+		}
+		else
+		{
+			$this->attacker = 1;
+			echo "Army 2 attacks first this turn!";
+		}
+	}
+	protected function draftTroops()
+	{
+		if(($last = min($this->army[0]->number, $this->army[1]->number)) < $this->troopSize)
+		{
+			$this->troopSize = $last;
+		}
+		foreach($this->army as $key => $army)
+		{
+			$this->$turnTroops[$key] = $army->draftTroops($this->troopSize);
+		}
+	}
+
+	protected function combat()
+	{
+		foreach($this->turnTroops[0] as $id)
+		{
+			$a = $this->army[0]->soldiers[$id]->rollCombat();
+			$b = $this->army[1]->soldiers[$id]->rollCombat();
+			if(($a > $b) OR (($a = $b) && ($this->attacker == 0)))
 			{
-				if($this->armies[$key]->getSoldier($id)-> ==
+				$this->army[1]->soldiers[$id]->die();
+				$this->army[0]->soldiers[$id]->reset()
+				echo $this->army[0]->soldiers[$id]->getType()." ".$this->army[0]->soldiers[$id]->getName()." hits for ".$a." damage and squashes ".$this->army[1]->soldiers[$id]->getType()." ".$this->army[1]->soldiers[$id]->getName()." and his roll of ".$b.PHP_EOL;
+			}
+			elseif(($a < $b) OR (($a = $b) && ($this->attacker == 1)))
+			{
+				$this->army[0]->soldiers[$id]->die();
+				$this->army[1]->soldiers[$id]->reset()
+				echo $this->army[1]->soldiers[$id]->getType()." ".$this->army[1]->soldiers[$id]->getName()." hits for ".$b." damage and squashes ".$this->army[0]->soldiers[$id]->getType()." ".$this->army[0]->soldiers[$id]->getName()." and his roll of ".$a.PHP_EOL;
+			}
+		}
+	}
+
+	protected cleanUp()
+	{
+		foreach($this->army as $key => $army)
+		{
+			$army->buryDead($this->turnTroops[$key]);
+		}
+	}
+
+}

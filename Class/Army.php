@@ -17,7 +17,7 @@ class Army
     if($number > 10000)
     {
       $number = 10000;
-      echo "This isn't War of the worlds, creating a bit smaller army:)";
+      echo "This isn't War of the worlds, creating a bit smaller army:)".PHP_EOL;
     }
     $this->number = $number;
     $this->bananaCount = $number;
@@ -28,7 +28,7 @@ class Army
 
   public function draftTroops(int $troopSize): array
   {
-    return array_rand($this->soldiers, $troopSize)
+    return array_rand($this->soldiers, $troopSize);
   }
 
 
@@ -36,8 +36,9 @@ class Army
   {
     foreach($array as $id)
     {
-      $graveyard[$id] = $soldier[$id];
+      $this->graveyard[$id] = $this->soldier[$id];
       unset($soldier[$id]);
+      $this->number -= 1;
     }
   }
 
