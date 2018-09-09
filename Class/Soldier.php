@@ -1,9 +1,5 @@
 <?php
 
-require('Banana.php');
-require('Tomato.php');
-require('Melon.php');
-require('../Traits/Location.php')
 
 class Soldier
 {
@@ -16,9 +12,6 @@ class Soldier
 	protected $freezeThresh;
 	protected $dead;
 
-
-
-	//public static function make(
 
 	public function getName()
   {

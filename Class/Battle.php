@@ -22,7 +22,28 @@ class Battle
 
   public function fight()
   {
-    for($i = $this->army[0]->number + $this->army[1]->number; (!$this->army[0]->number) OR (!$this->army[0]->number); )$this->newTurn();
+    while (($this->army[0]->number $$ $this->army[0]->number) > 0)
+		{
+			$this->newTurn();
+		}
+		if($this->army[0]->number)
+		{
+			echo "Army 1 wins! Army 2 is no more.".PHP_EOL;
+			echo "Survivors:".PHP_EOL;
+			foreach ($this->army[0]->soldiers as $soldier)
+			{
+				echo $soldier->getType()." ".$soldier->getName().PHPEOL;
+			}
+		}
+		else
+		{
+			echo "Army 2 wins! Army 1 is no more.".PHP_EOL;
+			echo "Survivors:".PHP_EOL;
+			foreach ($this->army[1]->soldiers as $soldier)
+			{
+				echo $soldier->getType()." ".$soldier->getName().PHPEOL;
+			}
+		}
   }
 
   protected function newTurn()
