@@ -30,7 +30,7 @@ class Soldier //ne extenda Army
 		$this->dead = 1;
 	}
 
-	public function rollFreeze($temp)
+	public function rollFreeze(int $temp)
 	{
 		if($this->freezeThresh > $temp)
 		{

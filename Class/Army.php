@@ -26,13 +26,13 @@ class Army
     $this->makeArmy();
   }
 
-  public function draftTroops($troopSize)
+  public function draftTroops(int $troopSize): array
   {
     return array_rand($this->soldiers, $troopSize)
   }
 
 
-  public function buryDead($array)
+  public function buryDead(array $array)
   {
     foreach($array as $id)
     {
