@@ -5,9 +5,9 @@ Fruits and vegetables fight in this epic random battle!
 Script: battle.php
 
 Query strings:
-int army1 - number of soldiers for Army 1
-int army2 - number of soldiers for Army 2
-int size - number of soldiers fighting per turn (optional)
+int army1 - number of soldiers for Army 1<br />
+int army2 - number of soldiers for Army 2<br />
+int size - number of soldiers fighting per turn (optional)<br />
 
 Logic:
 Battle is set on a random location (actual readings taken from www.apixu.com API) with its own time and weather conditions.
