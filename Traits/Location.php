@@ -2,21 +2,17 @@
 
 trait Location
 {
-
-  public function getLocation(): array
-  {
-    $array = json_decode(file_get_contents('json/'.rand(1,18).'.json'), true);
-    $location['city'] = $array['location']['name'].", ".$array['location']['country'];
-    $location['temp'] = $array['current']['temp_c'];
-    $location['isDay']  = $array['current']['is_day'];
-    if($array['current']['condition']['text'] == "sunny")
+    public function getLocation(): array
     {
-      $location['sunny'] = TRUE;
+        $array = json_decode(file_get_contents('json/'.rand(1, 18).'.json'), true);
+        $location['city'] = $array['location']['name'].", ".$array['location']['country'];
+        $location['temp'] = $array['current']['temp_c'];
+        $location['isDay']  = $array['current']['is_day'];
+        if ($array['current']['condition']['text'] == "sunny") {
+            $location['sunny'] = true;
+        } else {
+            $location['sunny'] = false;
+        }
+        return $location;
     }
-    else
-    {
-      $location['sunny'] = FALSE;
-    }
-    return $location;
-  }
 }
