@@ -1,6 +1,5 @@
 <?php
 
-require('Soldier.php');
 
 
 class Army
@@ -28,7 +27,12 @@ class Army
 
   public function draftTroops(int $troopSize): array
   {
-    return array_rand($this->soldiers, $troopSize);
+    $a = array_rand($this->soldiers, $troopSize);
+    if(getType($a) == "integer")
+    {
+      $a = array ($a);
+    }
+    return $a;
   }
 
 
@@ -36,9 +40,12 @@ class Army
   {
     foreach($array as $id)
     {
-      $this->graveyard[$id] = $this->soldier[$id];
-      unset($soldier[$id]);
-      $this->number -= 1;
+      if($this->soldiers[$id]->isDead())
+      {
+        $this->graveyard[$id] = $this->soldiers[$id];
+        unset($this->soldier[$id]);
+        $this->number -= 1;
+      }
     }
   }
 

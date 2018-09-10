@@ -1,7 +1,11 @@
 <?php
 
+require_once('Soldier.php');
+
 class Melon extends Soldier
 {
+
+
 	public function __construct()
 	{
 		$this->name = random_int(1,1000);
@@ -10,10 +14,10 @@ class Melon extends Soldier
 		$this->freezeThresh = random_int(5,10);
 	}
 
-	public function rollCombat(): int
+	public function rollCombat(array $location): int
 	{
 		$this->currentAttack = random_int(1,6);
-		$this->rollFreeze();
+		$this->rollFreeze($location);
 		return $this->currentAttack;
 	}
 

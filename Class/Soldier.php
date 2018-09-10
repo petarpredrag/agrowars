@@ -1,5 +1,6 @@
 <?php
 
+require("./Traits/Location.php");
 
 class Soldier
 {
@@ -10,7 +11,7 @@ class Soldier
 	protected $baseAttack;
 	protected $currentAttack;
 	protected $freezeThresh;
-	protected $dead;
+	protected $dead = FALSE;
 
 
 	public function getName()
@@ -23,19 +24,24 @@ class Soldier
     return $this->type;
   }
 
+	public function isDead(): bool
+	{
+		return $this->dead;
+	}
+
 	public function die()
 	{
 		$this->dead = 1;
 	}
 
-	protected function rollFreeze()
+	protected function rollFreeze(array $location)
 	{
-		if($this->freezeThresh > $this->$temp)
+		if($this->freezeThresh > $location['temp'])
 		{
 			if(random_int(1,3) == 1)
 			{
 				$this->currentAttack = 0;
-				echo $this->type." ".$this->name." froze and is unable to fight!".PHP_EOL;
+				echo $this->type." ".$this->name." froze at ".$location['temp']." degrees and is unable to fight!<br>";
 			}
 		}
 	}
